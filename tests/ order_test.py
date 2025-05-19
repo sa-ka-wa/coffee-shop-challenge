@@ -1,5 +1,8 @@
 class Order:
     def __init__(self, customer, coffee, price):
+        from customer import Customer
+        from coffee import Coffee
+
         self.customer = customer
         self.coffee = coffee
         self._set._price(price)
@@ -10,6 +13,14 @@ class Order:
         if not (1.0 <= value <= 10.0):
             raise ValueError("Price must be between 1.0 and 10.0")
         self._price = float(value)
+
+    @property
+    def customer(self):
+        return self._customer
+
+    @property
+    def coffee(self):
+        return self._coffee
 
     @property
     def price(self):
