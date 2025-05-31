@@ -1,6 +1,8 @@
 class Customer:
     def __init__(self, name):
         self.name = name
+        self._orders = []
+        self._coffees = []
     
     @property
     def name(self):
@@ -13,11 +15,11 @@ class Customer:
             raise ValueError("Name must be between 1 and 15 characters")
         self._name = value
 
-    def order(self):
+    def orders(self):
         return list(self._orders)
     
-    def coffee(self):
-        return list(order.coffee for order in self._coffees)
+    def coffees(self):
+        return list({order.coffee for order in self._orders})
     
     def create_order(self, coffee, price):
         from order import Order 
@@ -30,9 +32,9 @@ class Customer:
         max_spent = 0
         top_customer = None
         for order in coffee.orders():
-            if order.customer in coffee.customers():
-                total_spent = sum(o.price for o in order.customer.orders() if o.coffee == coffee)
-                if total_spent > max_spent:
-                    max_spent = total_spent
-                    top_customer = order.customer
+            customer = order.customer
+            total_spent = sum(o.price for o in order.customer.orders() if o.coffee == coffee)
+            if total_spent > max_spent:
+                max_spent = total_spent
+                top_customer = order.customer
         return top_customer
